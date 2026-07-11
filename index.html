@@ -448,16 +448,15 @@ document.addEventListener('DOMContentLoaded', () => {
     { t:"Sử dụng AI có trách nhiệm", goal:"Nhận biết giới hạn của AI và tính trung thực.", result:"Thực hành trích dẫn nguồn, quét rủi ro trùng lặp.", link:"https://docs.google.com/document/d/1ZmU8CV8_MKphTrkzHbQWqPN41ykqWEJh/edit?usp=drive_link"}
   ];
 
-  const accordion = document.getElementById('exAccordion');
-  exercises.forEach((ex, i) => {
-    const item = document.createElement('div');
-    item.className = 'ex-item';
-    item.innerHTML = `
-      <div class="ex-head">
-        <div class="ex-num">${String(i + 1).padStart(2, '0')}</div>
-        <div class="ex-title">${ex.t}</div>
-        <svg class="ex-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-      </div>
+ const accordion = document.getElementById('exAccordion');
+    if (accordion) {
+        exercises.forEach((ex, i) => {
+            const div = document.createElement('div');
+            div.className = 'ex-item';
+            div.innerHTML = `
+                <div class="ex-head" style="padding:20px; cursor:pointer; border-bottom:1px solid #eee;">
+                    <strong>${i+1}. ${ex.t}</strong>
+                </div>
       <div class="ex-body"><div class="ex-body-inner">
         <div class="ex-chips">
           <div class="ex-chip goal"><div class="chip-label">🎯 Mục tiêu</div><p>${ex.goal}</p></div>
@@ -465,30 +464,9 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <a href="${ex.link}" target="_blank" class="ex-drive">Xem trên Google Drive</a>
       </div></div>`;
-    accordion.appendChild(item);
-    item.querySelector('.ex-head').addEventListener('click', () => {
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.ex-item').forEach(el => {
-        el.classList.remove('open');
-        el.querySelector('.ex-body').style.maxHeight = null;
-      });
-      if(!isOpen) {
-        item.classList.add('open');
-        item.querySelector('.ex-body').style.maxHeight = item.querySelector('.ex-body-inner').scrollHeight + 'px';
-      }
-    });
-  });
-
-  // 2. Intersection Observer (Hiệu ứng cuộn)
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
-  }, { threshold: 0.05 }); // Giảm threshold xuống 0.05 để dễ kích hoạt hơn
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-  // 3. Xử lý Canvas (Wash)
-  const canvas = document.getElementById('wash');
-  const ctx = canvas.getContext('2d');
-  // ... (giữ nguyên logic canvas cũ của bạn)
+  accordion.appendChild(div);
+        });
+    }
 });
 </script>
 </body>
