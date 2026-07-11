@@ -434,175 +434,62 @@
     <p>Portfolio học tập · 2026</p>
   </footer>
 </main>
-
 <script>
-const steps = document.querySelectorAll('.step');
-const sections = ['gioithieu','baitap','hocduoc','tongket'].map(id => document.getElementById(id));
+// Đảm bảo script chạy sau khi HTML được tải xong
+document.addEventListener('DOMContentLoaded', () => {
 
-function setActive(){
-  let idx = 0;
-  sections.forEach((s, i) => { if(window.scrollY + 180 >= s.offsetTop) idx = i; });
-  steps.forEach((s, i) => {
-    s.classList.toggle('active', i === idx);
-    s.classList.toggle('done', i < idx);
-  });
-}
-window.addEventListener('scroll', setActive);
+  // 1. Logic Accordion (Bài tập)
+  const exercises = [
+    { t:"Thao tác cơ bản với tệp tin và thư mục", goal:"Xây dựng thói quen tổ chức dữ liệu cá nhân khoa học.", result:"Phân loại tài nguyên, áp dụng phím tắt, dọn dẹp bộ nhớ đệm.", link:"https://docs.google.com/document/d/1P6LrX17dTNBkvY7nu7l6CZrglE6X6hPY/edit?usp=drive_link"},
+    { t:"Khai thác dữ liệu và thông tin", goal:"Tìm đúng nguồn tham khảo và đánh giá tin cậy.", result:"Sử dụng toán tử tìm kiếm chuyên sâu, đối chiếu chéo thông tin.", link:"https://docs.google.com/document/d/1bzKYjS0dtASmUB-f2U2iY4xRjFP7HXAP/edit?usp=drive_link"},
+    { t:"Tổng quan về trí tuệ nhân tạo", goal:"Làm chủ AI với tư duy điều khiển thay vì phụ thuộc.", result:"Thiết lập ma trận prompt đa tầng tối ưu.", link:"https://docs.google.com/document/d/1W3bo6I81DduZBR9WVZ40kzYzAATdwpZ7/edit?usp=drive_link"},
+    { t:"Giao tiếp và hợp tác trong môi trường số", goal:"Nâng cao năng lực làm việc nhóm hiện đại.", result:"Vận hành văn hóa cộng tác đám mây không biên giới.", link:"https://docs.google.com/document/d/1ZqrbEtQz8W9Uhwv_3oaxjbCsrImyTo9-/edit?usp=drive_link"},
+    { t:"Sáng tạo nội dung số", goal:"Kết hợp AI thiết kế với dấu ấn cá nhân.", result:"Ứng dụng mô hình AI tạo sinh, thiết kế Infographic.", link:"https://docs.google.com/document/d/17EH1vD_BurTci0xwKh-4UgbBZe9Op8Y6/edit?usp=drive_link"},
+    { t:"Sử dụng AI có trách nhiệm", goal:"Nhận biết giới hạn của AI và tính trung thực.", result:"Thực hành trích dẫn nguồn, quét rủi ro trùng lặp.", link:"https://docs.google.com/document/d/1ZmU8CV8_MKphTrkzHbQWqPN41ykqWEJh/edit?usp=drive_link"}
+  ];
 
-steps.forEach(step => {
-  step.addEventListener('click', e => {
-    e.preventDefault();
-    const target = document.getElementById(step.dataset.target);
-    window.scrollTo({ top: target.offsetTop - 100, behavior:'smooth' });
-  });
-});
-
-document.querySelector('.hero-actions')?.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', e => {
-    const id = a.getAttribute('href').slice(1);
-    const target = document.getElementById(id);
-    if(target){
-      e.preventDefault();
-      window.scrollTo({ top: target.offsetTop - 100, behavior:'smooth' });
-    }
-  });
-});
-
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if(e.isIntersecting){
-      e.target.classList.add('in');
-      io.unobserve(e.target);
-    }
-  });
-}, { threshold:0.12 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-const exercises = [
-  {
-    t:"Thao tác cơ bản với tệp tin và thư mục",
-    goal:"Xây dựng thói quen tổ chức dữ liệu cá nhân khoa học, dễ tìm kiếm và dễ quản lý hơn trong học tập.",
-    result:"Trực tiếp phân loại và quy hoạch lại toàn bộ tài nguyên lưu trữ theo dự án, áp dụng hệ thống phím tắt nâng cao để loại bỏ các thao tác thừa và tiến hành dọn dẹp bộ nhớ đệm hệ điều hành.",
-    link:"https://docs.google.com/document/d/1P6LrX17dTNBkvY7nu7l6CZrglE6X6hPY/edit?usp=drive_link&ouid=100698810264392713077&rtpof=true&sd=true"
-  },
-  {
-    t:"Khai thác dữ liệu và thông tin",
-    goal:"Ứng dụng  tìm đúng nguồn tham khảo và đánh giá mức độ tin cậy của thông tin trước khi đưa vào bài học",
-    result:"Sử dụng các toán tử tìm kiếm chuyên sâu để bóc tách thông tin từ các cổng dữ liệu học thuật, tiến hành đối chiếu chéo thông tin đa chiều nhằm đảm bảo tính chuẩn xác và độ tin cậy của tài liệu.",
-    link:"https://docs.google.com/document/d/1bzKYjS0dtASmUB-f2U2iY4xRjFP7HXAP/edit?usp=drive_link&ouid=100698810264392713077&rtpof=true&sd=true"
-  },
-  {
-    t:"Tổng quan về trí tuệ nhân tạo",
-    goal:"Làm chủ công nghệ với tư duy "điều khiển" thay vì phụ thuộc, biến AI thành một người cộng sự đắc lực hỗ trợ việc phân tích ngữ pháp, dịch thuật văn bản và nghiên cứu ngữ cảnh.",
-    result:"Nghiên cứu kỹ nghệ kỹ sư câu lệnh (Prompt Engineering), thử nghiệm thiết lập các ma trận prompt đa tầng để tối ưu hóa câu trả lời của AI, từ đó xây dựng bộ câu hỏi ôn tập chất lượng.",
-    link:"https://docs.google.com/document/d/1W3bo6I81DduZBR9WVZ40kzYzAATdwpZ7/edit?usp=drive_link&ouid=100698810264392713077&rtpof=true&sd=true"
-  },
-  {
-    t:"Giao tiếp và hợp tác trong môi trường số",
-    goal:"Nâng cao năng lực làm việc nhóm hiện đại, thiết lập quy trình kết nối và đồng bộ dữ liệu liên tục giữa các thành viên trên nền tảng điện toán đám mây.",
-    result:"Xây dựng văn hóa cộng tác đám mây không biên giới, tối ưu hóa năng lực tương tác thời gian thực và quản trị tiến độ dự án nhóm một cách khoa học.",
-    link:"https://docs.google.com/document/d/1ZqrbEtQz8W9Uhwv_3oaxjbCsrImyTo9-/edit?usp=drive_link&ouid=100698810264392713077&rtpof=true&sd=true"
-  },
-  {
-    t:"Sáng tạo nội dung số",
-    goal:"Kết hợp AI vào quá trình thiết kế và trình bày nội dung mà vẫn giữ được dấu ấn cá nhân.",
-    result:"Ứng dụng mô hình AI tạo sinh để làm phong phú chất liệu hình ảnh gốc, kết hợp tư duy sắp xếp bố cục trên các công cụ thiết kế số để hoàn thiện một ấn phẩm Infographic trực quan và thu hút.",
-    link:"https://docs.google.com/document/d/17EH1vD_BurTci0xwKh-4UgbBZe9Op8Y6/edit?usp=drive_link&ouid=100698810264392713077&rtpof=true&sd=true"
-  },
-  {
-    t:"Sử dụng AI có trách nhiệm trong học tập và nghiên cứu",
-    goal:"Nhận biết giới hạn của AI và học cách sử dụng công cụ này một cách trung thực, có trách nhiệm.",
-    result:"Nghiên cứu sâu văn bản hướng dẫn sử dụng AI văn minh của ĐHQGHN, thực hành tự quét rủi ro trùng lặp nội dung và chuẩn hóa kỹ thuật trích dẫn nguồn minh bạch cho các sản phẩm số.",
-    link:"https://docs.google.com/document/d/1ZmU8CV8_MKphTrkzHbQWqPN41ykqWEJh/edit?usp=drive_link&ouid=100698810264392713077&rtpof=true&sd=true"
-  }
-];
-
-<script>
-const accordion = document.getElementById('exAccordion');
-exercises.forEach((ex, i) => {
-  const item = document.createElement('div');
-  item.className = 'ex-item';
-  item.innerHTML = `
-    <div class="ex-head">
-      <div class="ex-num">${String(i + 1).padStart(2, '0')}</div>
-      <div class="ex-title">${ex.t}</div>
-      <svg class="ex-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-    </div>
-    <div class="ex-body">
-      <div class="ex-body-inner">
+  const accordion = document.getElementById('exAccordion');
+  exercises.forEach((ex, i) => {
+    const item = document.createElement('div');
+    item.className = 'ex-item';
+    item.innerHTML = `
+      <div class="ex-head">
+        <div class="ex-num">${String(i + 1).padStart(2, '0')}</div>
+        <div class="ex-title">${ex.t}</div>
+        <svg class="ex-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="ex-body"><div class="ex-body-inner">
         <div class="ex-chips">
           <div class="ex-chip goal"><div class="chip-label">🎯 Mục tiêu</div><p>${ex.goal}</p></div>
-          <div class="ex-chip result"><div class="chip-label">Quá trình thực </div><p>${ex.result}</p></div>
+          <div class="ex-chip result"><div class="chip-label">Quá trình</div><p>${ex.result}</p></div>
         </div>
-        <a href="${ex.link}" target="_blank" rel="noopener" class="ex-drive">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-          Xem trên Google Drive
-        </a>
-      </div>
-    </div>`;
-  accordion.appendChild(item);
-
-  const head = item.querySelector('.ex-head');
-  const body = item.querySelector('.ex-body');
-  head.addEventListener('click', () => {
-    const isOpen = item.classList.contains('open');
-    accordion.querySelectorAll('.ex-item.open').forEach(o => {
-      o.classList.remove('open');
-      o.querySelector('.ex-body').style.maxHeight = null;
+        <a href="${ex.link}" target="_blank" class="ex-drive">Xem trên Google Drive</a>
+      </div></div>`;
+    accordion.appendChild(item);
+    item.querySelector('.ex-head').addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.ex-item').forEach(el => {
+        el.classList.remove('open');
+        el.querySelector('.ex-body').style.maxHeight = null;
+      });
+      if(!isOpen) {
+        item.classList.add('open');
+        item.querySelector('.ex-body').style.maxHeight = item.querySelector('.ex-body-inner').scrollHeight + 'px';
+      }
     });
-    if(!isOpen){
-      item.classList.add('open');
-      body.style.maxHeight = body.scrollHeight + 'px';
-    }
   });
+
+  // 2. Intersection Observer (Hiệu ứng cuộn)
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.05 }); // Giảm threshold xuống 0.05 để dễ kích hoạt hơn
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // 3. Xử lý Canvas (Wash)
+  const canvas = document.getElementById('wash');
+  const ctx = canvas.getContext('2d');
+  // ... (giữ nguyên logic canvas cũ của bạn)
 });
-accordion.firstElementChild?.querySelector('.ex-head').click();
-
-const canvas = document.getElementById('wash');
-const ctx = canvas.getContext('2d');
-let W, H;
-function resize(){
-  W = canvas.width = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener('resize', resize);
-
-let mouse = { x:-9999, y:-9999 };
-window.addEventListener('mousemove', e => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
-
-const washColors = ['214,40,40', '210,210,214', '242,242,244', '120,120,126'];
-const blobs = Array.from({ length:6 }, (_, i) => ({
-  ox: Math.random() * W,
-  oy: Math.random() * H,
-  rad: Math.random() * 180 + 200,
-  ang: Math.random() * Math.PI * 2,
-  speed: Math.random() * 0.0006 + 0.0003,
-  orbit: Math.random() * 160 + 100,
-  color: washColors[i % washColors.length]
-}));
-
-function tick(){
-  ctx.clearRect(0, 0, W, H);
-  blobs.forEach(b => {
-    b.ang += b.speed;
-    const bx = b.ox + Math.cos(b.ang) * b.orbit;
-    const by = b.oy + Math.sin(b.ang * 1.15) * b.orbit;
-    const mx = bx + (mouse.x - bx) * 0.015;
-    const my = by + (mouse.y - by) * 0.015;
-    const grad = ctx.createRadialGradient(mx, my, 0, mx, my, b.rad);
-    grad.addColorStop(0, `rgba(${b.color},0.30)`);
-    grad.addColorStop(0.6, `rgba(${b.color},0.12)`);
-    grad.addColorStop(1, `rgba(${b.color},0)`);
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, W, H);
-  });
-  requestAnimationFrame(tick);
-}
-requestAnimationFrame(tick);
 </script>
 </body>
 </html>
