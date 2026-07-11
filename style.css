@@ -292,3 +292,12 @@
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:0.01ms !important;transition-duration:0.01ms !important;}
   }
+/* Ghi đè hiệu ứng ẩn */
+.reveal {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+/* Hiện luôn phần body của bài tập để kiểm tra */
+.ex-body {
+    max-height: none !important;
+}
