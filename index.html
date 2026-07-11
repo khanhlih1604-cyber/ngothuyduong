@@ -448,25 +448,32 @@ document.addEventListener('DOMContentLoaded', () => {
     { t:"Sử dụng AI có trách nhiệm", goal:"Nhận biết giới hạn của AI và tính trung thực.", result:"Thực hành trích dẫn nguồn, quét rủi ro trùng lặp.", link:"https://docs.google.com/document/d/1ZmU8CV8_MKphTrkzHbQWqPN41ykqWEJh/edit?usp=drive_link"}
   ];
 
- const accordion = document.getElementById('exAccordion');
+const accordion = document.getElementById('exAccordion');
     if (accordion) {
         exercises.forEach((ex, i) => {
             const div = document.createElement('div');
-            div.className = 'ex-item';
+            div.className = 'ex-item open'; // Thêm class 'open' để hiển thị ngay
             div.innerHTML = `
-                <div class="ex-head" style="padding:20px; cursor:pointer; border-bottom:1px solid #eee;">
-                    <strong>${i+1}. ${ex.t}</strong>
+                <div class="ex-head">
+                    <div class="ex-num">${i + 1}</div>
+                    <div class="ex-title">${ex.t}</div>
                 </div>
-      <div class="ex-body"><div class="ex-body-inner">
-        <div class="ex-chips">
-          <div class="ex-chip goal"><div class="chip-label">🎯 Mục tiêu</div><p>${ex.goal}</p></div>
-          <div class="ex-chip result"><div class="chip-label">Quá trình</div><p>${ex.result}</p></div>
-        </div>
-        <a href="${ex.link}" target="_blank" class="ex-drive">Xem trên Google Drive</a>
-      </div></div>`;
-  accordion.appendChild(div);
+                <div class="ex-body" style="max-height: 500px;">
+                    <div class="ex-body-inner">
+                        <div class="ex-chips">
+                         <div class="ex-chip goal"><div class="chip-label">🎯 Mục tiêu</div><p>${ex.goal}</p></div>
+                         <div class="ex-chip result"><div class="chip-label">Quá trình</div><p>${ex.result}</p></div>
+                </div>
+                <a href="${ex.link}" target="_blank" class="ex-drive">Xem trên Google Drive</a>
+                    </div>
+                </div>`;
+            accordion.appendChild(div);
         });
     }
+  // 2. Tự động hiển thị các phần bị ẩn bởi hiệu ứng cuộn
+    document.querySelectorAll('.reveal').forEach(el => {
+        el.classList.add('in');
+    });
 });
 </script>
 </body>
